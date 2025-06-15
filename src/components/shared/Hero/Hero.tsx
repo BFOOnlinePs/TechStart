@@ -7,6 +7,7 @@ import { RainbowButton } from "../../ui/rainbow-button";
 import { Navbar } from "../Nav/Navbar";
 import AnimatedNetworkBackground from "../Nav/AnimatedBackground";
 import { useLanguage } from "@/context/LanguageContext";
+import Link from "next/link";
 
 const STEP_DURATION = 10000;
 
@@ -272,29 +273,29 @@ const Hero = ({ steps }: HeroProps) => {
               <div className="space-y-6">
                 <div className="flex flex-wrap md:flex-nowrap justify-center md:justify-between gap-4">
                   {currentSteps.map((step, index) => (
-                    <motion.button
-                      key={index}
-                      className={`text-[16px] font-medium px-4 sm:px-6 py-2 sm:py-3 rounded-full transition-all duration-300 flex-grow md:flex-grow-0 ${
-                        index === currentStep
-                          ? "text-white shadow-lg"
-                          : "bg-white/50 hover:bg-white/80"
-                      }`}
-                      style={{
-                        backgroundColor:
-                          index === currentStep ? step.color : "transparent",
-                        border: `2px solid ${step.color}`,
-                        color: index === currentStep ? "white" : step.color,
-                      }}
-                      whileHover={{
-                        scale: 1.05,
-                        backgroundColor: step.color,
-                        color: "white",
-                      }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={() => handleTabClick(index)}
-                    >
-                      {step.tagline}
-                    </motion.button>
+                    <Link href={step.buttonLink} key={index} passHref>
+                      <motion.button
+                        className={`text-[14px] font-medium px-4 sm:px-6 py-2 sm:py-3 rounded-full transition-all duration-300 flex-grow md:flex-grow-0 ${
+                          index === currentStep
+                            ? "text-white shadow-lg"
+                            : "bg-white/50 hover:bg-white/80"
+                        }`}
+                        style={{
+                          backgroundColor:
+                            index === currentStep ? step.color : "transparent",
+                          border: `2px solid ${step.color}`,
+                          color: index === currentStep ? "white" : step.color,
+                        }}
+                        whileHover={{
+                          scale: 1.05,
+                          backgroundColor: step.color,
+                          color: "white",
+                        }}
+                        whileTap={{ scale: 0.95 }}
+                      >
+                        {step.tagline}
+                      </motion.button>
+                    </Link>
                   ))}
                 </div>
                 <motion.div className="h-2 bg-gray-200 rounded-full overflow-hidden">
@@ -309,7 +310,7 @@ const Hero = ({ steps }: HeroProps) => {
               </div>
             </motion.div>
           </div>
-          
+
           {/* Mobile Navigation Buttons */}
           <div className="lg:hidden mt-8 space-y-6">
             <div className="flex flex-wrap justify-center gap-4">

@@ -56,15 +56,12 @@ const OurTeam = ({ teamMembersData }: OurTeamProps) => {
   const containerVariants = {
     enter: (direction: number) => ({
       x: direction > 0 ? "100%" : "-100%",
-      opacity: 0,
     }),
     center: {
       x: 0,
-      opacity: 1,
     },
     exit: (direction: number) => ({
       x: direction < 0 ? "100%" : "-100%",
-      opacity: 0,
     }),
   }
 
@@ -87,6 +84,12 @@ const OurTeam = ({ teamMembersData }: OurTeamProps) => {
         ease: "easeOut",
       },
     },
+  }
+
+  const pauseAndGo = (callback: () => void) => {
+    setIsAutoPlay(false)
+    callback()
+    setTimeout(() => setIsAutoPlay(true), 1000) // أعد التشغيل التلقائي بعد ثانية
   }
 
   return (
@@ -151,8 +154,7 @@ const OurTeam = ({ teamMembersData }: OurTeamProps) => {
               animate="center"
               exit="exit"
               transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.4 },
+                x: { type: "tween", duration: 0.7, ease: "easeInOut" }, // انتقال سلس فقط
               }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4"
             >
@@ -218,7 +220,7 @@ const OurTeam = ({ teamMembersData }: OurTeamProps) => {
             transition={{ delay: 0.3 }}
           >
             <button
-              onClick={handlePrev}
+              onClick={() => pauseAndGo(handlePrev)}
               className="p-3 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur shadow-lg hover:shadow-xl border border-purple-500/20 hover:border-purple-500 transition-all duration-300 group"
             >
               <ArrowLeft className="w-6 h-6 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300" />
@@ -238,7 +240,7 @@ const OurTeam = ({ teamMembersData }: OurTeamProps) => {
             </div>
 
             <button
-              onClick={handleNext}
+              onClick={() => pauseAndGo(handleNext)}
               className="p-3 rounded-full bg-white/80 dark:bg-gray-800/80 backdrop-blur shadow-lg hover:shadow-xl border border-purple-500/20 hover:border-purple-500 transition-all duration-300 group"
             >
               <ArrowRight className="w-6 h-6 text-purple-600 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300" />

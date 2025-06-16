@@ -1,5 +1,5 @@
 export const teamTableConfig = {
-  defaultPageSize: 10,
+  defaultPageSize: 100,
   
   filterableColumns: [
     { id: "nameEn", title: "Name (English)" },

@@ -123,7 +123,7 @@ export function WorkWithUs({
           <TabsContent value="procurements">
             <motion.div
               variants={itemVariants}
-              className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+              className=" "
             >
               {procurementListings.length > 0 ? (
                 procurementListings.map((listing) => (
@@ -204,16 +204,16 @@ function ListingCard({ listing, variant, translations }: ListingCardProps) {
         };
 
   return (
-    <Card className="overflow-hidden transition-all hover:shadow-lg hover:scale-105">
+    <Card className="overflow-hidden transition-all hover:shadow-lg hover:scale-105 w-full min-h-[380px] md:min-h-[440px] p-4 md:p-8">
       <CardHeader
         className={`${colorScheme.bg} flex flex-row items-center space-y-0 gap-4`}
       >
         <div
-          className={`w-12 h-12 rounded-full flex items-center justify-center ${colorScheme.icon}`}
+          className={`w-16 h-16 rounded-full flex items-center justify-center ${colorScheme.icon}`}
         >
-          <Icon className="h-5 w-5" />
+          <Icon className="h-7 w-7" />
         </div>
-        <CardTitle className="text-xl font-semibold">
+        <CardTitle className="text-2xl font-bold">
           {isArabic ? listing.titleAr : listing.titleEn}
         </CardTitle>
       </CardHeader>

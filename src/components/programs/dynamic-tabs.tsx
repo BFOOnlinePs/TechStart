@@ -145,22 +145,28 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
             }
           </div>
 
-          <div className={`mt-6 ${currentLang === 'ar' ? 'text-right' : 'text-left'}`}>
-            <Link href={programId === "cm7urp3n80015t718sk4lzm6r" 
-              ? "https://fs20.formsite.com/DAIForms/np9dh3xik0/login" 
-              : "https://fs20.formsite.com/DAIForms/smr0etmskv/login"} target="_blank" rel="noopener noreferrer">
-              <Button
-                size="default"
-                className="bg-gradient-to-r from-[#1C6AAF] to-[#872996] hover:opacity-90 
-                         transition-opacity shadow-lg hover:shadow-xl text-sm sm:text-base
-                         px-8 py-2.5"
+          {programId === "cm7urr4jk001dt718l3o9exad" && (
+            <div className={`mt-6 ${currentLang === 'ar' ? 'text-right' : 'text-left'}`}>
+              <Link
+                href="https://fs20.formsite.com/DAIForms/np9dh3xik0/login"
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                {currentLang === "ar"
-                  ? buttonText.apply.ar
-                  : buttonText.apply.en}
-              </Button>
-            </Link>
-          </div>
+                <Button
+                  size="default"
+                  className="bg-gradient-to-r from-[#1C6AAF] to-[#872996] hover:opacity-90 
+                           transition-opacity shadow-lg hover:shadow-xl text-sm sm:text-base
+                           px-8 py-2.5"
+                >
+                  {currentLang === "ar"
+                    ? buttonText.apply.ar
+                    : buttonText.apply.en}
+                </Button>
+              </Link>
+            </div>
+          )}
+
+     
         </div>
 
         <p className={`text-xs sm:text-sm text-gray-500 italic ${currentLang === 'ar' ? 'text-right' : 'text-left'}`}>
@@ -187,7 +193,15 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            {programName ? `${currentLang === "ar" ? "منحه " : ""}${programName} ${currentLang === "ar" ? "" : "Windows"}` : (currentLang === "ar" ? "تفاصيل البرنامج" : "Program Details")}
+            {programName
+              ? programId === "cm7urobwh0013t718p2dzugua"
+              ? currentLang === "ar"
+                ? `أنشطة ${programName}`
+                : `${programName} Activities`
+              : currentLang === "ar"
+                ? `منحة ${programName}`
+                : `${programName} Windows`
+              : (currentLang === "ar" ? "تفاصيل البرنامج" : "Program Details")}
           </motion.h2>
           <motion.div 
             className="w-24 h-1 bg-gradient-to-r from-[#1C6AAF] to-[#872996] mx-auto mb-6"

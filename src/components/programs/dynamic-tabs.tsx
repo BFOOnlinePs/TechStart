@@ -145,18 +145,25 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
             }
           </div>
 
-          {programId !== "cm7urobwh0013t718p2dzugua" && (
+       
+       
+
+          {(programId === "cm7urr4jk001dt718l3o9exad" || programId === "cm7urp3n80015t718sk4lzm6r") && (
             <div className={`mt-6 ${currentLang === 'ar' ? 'text-right' : 'text-left'}`}>
               <Link
-                href="https://fs20.formsite.com/DAIForms/np9dh3xik0/login"
+                href={
+                  programId === "cm7urr4jk001dt718l3o9exad"
+                    ? "https://fs20.formsite.com/DAIForms/smr0etmskv/login"
+                    : "https://fs20.formsite.com/DAIForms/np9dh3xik0/login"
+                }
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 <Button
                   size="default"
                   className="bg-gradient-to-r from-[#1C6AAF] to-[#872996] hover:opacity-90 
-                     transition-opacity shadow-lg hover:shadow-xl text-sm sm:text-base
-                     px-8 py-2.5"
+                 transition-opacity shadow-lg hover:shadow-xl text-sm sm:text-base
+                 px-8 py-2.5"
                 >
                   {currentLang === "ar"
                     ? buttonText.apply.ar

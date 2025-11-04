@@ -45,6 +45,8 @@ export async function createPost(formData: FormData) {
     })
 
     revalidatePath("/admin/blog")
+    revalidatePath("/admin/blog", "layout")
+    revalidatePath(`/[lang]/media-center`, "page")
     return { success: true, post }
   } catch (error) {
     console.error("Failed to create post:", error)

@@ -31,6 +31,8 @@ export async function createProgramTab(data: CreateProgramTabInput) {
     });
 
     revalidatePath("/admin/program-tabs");
+    revalidatePath("/admin/program-tabs", "layout");
+    revalidatePath(`/[lang]/programs`, "page");
     return { success: true, programTab };
   } catch (error) {
     console.error("Failed to create program tab:", error);
@@ -72,6 +74,9 @@ export async function updateProgramTab(data: UpdateProgramTabInput) {
     });
 
     revalidatePath("/admin/program-tabs");
+    revalidatePath("/admin/program-tabs", "layout");
+    revalidatePath(`/admin/program-tabs/edit/${id}`);
+    revalidatePath(`/[lang]/programs`, "page");
     return { success: true, programTab };
   } catch (error) {
     console.error("Failed to update program tab:", error);

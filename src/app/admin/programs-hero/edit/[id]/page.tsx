@@ -1,6 +1,9 @@
 import db from "@/app/db/db"
 import ProgramsHeroForm from "@/components/admin/program-tap/ProgramsHeroForm"
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export default async function EditProgramsHeroPage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const [programsHero, programs] = await Promise.all([

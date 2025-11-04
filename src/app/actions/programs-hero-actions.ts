@@ -82,6 +82,8 @@ export async function createProgramsHero(formData: CreateProgramsHeroInput | For
     });
 
     revalidatePath("/admin/programs-hero");
+    revalidatePath("/admin/programs-hero", "layout");
+    revalidatePath(`/[lang]/programs`, "page");
     return { success: true, programsHero };
   } catch (error) {
     console.error("Failed to create programs hero:", error);
@@ -135,6 +137,9 @@ export async function updateProgramsHero(data: UpdateProgramsHeroInput) {
     });
 
     revalidatePath("/admin/programs-hero");
+    revalidatePath("/admin/programs-hero", "layout");
+    revalidatePath(`/admin/programs-hero/edit/${id}`);
+    revalidatePath(`/[lang]/programs`, "page");
     return { success: true, programsHero };
   } catch (error) {
     console.error("Failed to update programs hero:", error);

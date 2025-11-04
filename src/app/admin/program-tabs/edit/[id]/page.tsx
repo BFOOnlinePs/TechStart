@@ -1,6 +1,9 @@
 import db from "@/app/db/db"
 import ProgramTabForm from "@/components/admin/program-tap/ProgramTabForm"
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 export default async function EditProgramTabPage(props: { params: Promise<{ id: string }> }) {
   const params = await props.params;
   const [programTab, programs] = await Promise.all([

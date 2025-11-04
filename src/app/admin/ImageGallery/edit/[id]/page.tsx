@@ -2,6 +2,9 @@ import { Suspense } from 'react';
 import EditImageGallery from '@/components/admin/Gallary/EditImageGallery';
 import db from '@/app/db/db';
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 async function getGallery(id: string) {
   const gallery = await db.gallery.findUnique({
     where: { id },

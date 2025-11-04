@@ -126,6 +126,8 @@ export async function deleteGallery(id: string) {
     }
 
     revalidatePath('/admin/ImageGallery');
+    revalidatePath('/admin/ImageGallery', 'layout');
+    revalidatePath(`/[lang]/media-center`, "page");
     return { success: true };
 
   } catch (error) {

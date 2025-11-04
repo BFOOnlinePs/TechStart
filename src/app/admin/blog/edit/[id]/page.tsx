@@ -2,6 +2,9 @@ import { Suspense } from 'react'
 import EditBlogForm from './EditBlogForm'
 import db from '@/app/db/db'
 
+export const dynamic = "force-dynamic"
+export const revalidate = 0
+
 async function fetchBlogById(id: number) {
   const blog = await db.post.findUnique({
     where: { id },

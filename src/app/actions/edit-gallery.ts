@@ -82,6 +82,9 @@ export async function editGallery(id: string, formData: FormData) {
     });
 
     revalidatePath("/admin/ImageGallery");
+    revalidatePath("/admin/ImageGallery", "layout");
+    revalidatePath(`/admin/ImageGallery/edit/${id}`);
+    revalidatePath(`/[lang]/media-center`, "page");
     return { success: true, gallery: updatedGallery };
   } catch (error) {
     console.error("Failed to edit gallery:", error);

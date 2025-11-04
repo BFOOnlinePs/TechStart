@@ -61,6 +61,9 @@ export async function editPost(id: number, formData: FormData) {
     });
 
     revalidatePath("/admin/blog");
+    revalidatePath("/admin/blog", "layout");
+    revalidatePath(`/admin/blog/edit/${id}`);
+    revalidatePath(`/[lang]/media-center`, "page");
     return { success: true, post };
   } catch (error) {
     console.error("Failed to edit post:", error);

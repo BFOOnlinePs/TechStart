@@ -54,6 +54,8 @@ export async function deleteVideoGallery(id: string) {
     })
 
     revalidatePath("/admin/VideoGallery")
+    revalidatePath("/admin/VideoGallery", "layout")
+    revalidatePath(`/[lang]/media-center`, "page")
     return { success: true }
   } catch (error) {
     console.error("Error in deleteVideoGallery:", error)
@@ -114,6 +116,9 @@ export async function updateVideoGallery(
     })) as VideoGallery
 
     revalidatePath("/admin/VideoGallery")
+    revalidatePath("/admin/VideoGallery", "layout")
+    revalidatePath(`/admin/VideoGallery/edit/${data.id}`)
+    revalidatePath(`/[lang]/media-center`, "page")
     return { success: true, gallery: updatedGallery }
   } catch (error) {
     console.error("Failed to update video gallery:", error)

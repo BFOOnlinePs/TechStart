@@ -88,6 +88,7 @@ export default function EditGalleryForm({ gallery }: EditGalleryFormProps) {
                     description: "Your gallery has been updated successfully.",
                 });
                 router.push("/admin/ImageGallery");
+                router.refresh();
             } else {
                 toast({
                     title: "Error",

@@ -94,6 +94,7 @@ export default function CreateImageGallery() {
         });
         form.reset();
         router.push("/admin/ImageGallery");
+        router.refresh();
       } else {
         toast({
           title: "Error",

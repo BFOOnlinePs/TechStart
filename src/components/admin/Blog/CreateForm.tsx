@@ -134,6 +134,7 @@ export default function CreateBlog() {
         });
         form.reset();
         router.push("/admin/blog");
+        router.refresh();
       } else if (result.error) {
         toast({
           title: "Error",

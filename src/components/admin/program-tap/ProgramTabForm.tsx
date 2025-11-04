@@ -100,6 +100,7 @@ export default function ProgramTabForm({ programTab, programs }: ProgramTabFormP
           description: `Your program tab has been ${programTab ? "updated" : "created"} successfully.`,
         })
         router.push("/admin/program-tabs")
+        router.refresh()
       } else if (result.error) {
         toast({
           title: "Error",

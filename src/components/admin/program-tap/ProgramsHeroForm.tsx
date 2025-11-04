@@ -202,6 +202,7 @@ export default function ProgramsHeroForm({ programsHero, programs: initialProgra
           description: `The programs hero has been ${programsHero ? "updated" : "created"} successfully.`,
         })
         router.push("/admin/programs-hero")
+        router.refresh()
       } else if (result?.error) {
         toast({
           title: "Error",

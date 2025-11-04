@@ -55,6 +55,7 @@ export default function CreateVideoGallery() {
         })
         form.reset()
         router.push("/admin/VideoGallery")
+        router.refresh()
       } else {
         throw new Error(result.error || "Failed to create video gallery")
       }

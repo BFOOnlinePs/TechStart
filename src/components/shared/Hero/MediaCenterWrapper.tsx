@@ -25,7 +25,7 @@ const getMediaCenterContentCached = cache(async () => {
   }
 })
 
-export default async function MediaCenterWrapper() {
+export default async function MediaCenterWrapper({ lang }: { lang: string }) {
   const response = await getMediaCenterContentCached()
 
   // Provide fallback content in case of failure
@@ -36,9 +36,9 @@ export default async function MediaCenterWrapper() {
       imageUrl: "/card-front.jpg",
       slug: ""
     },
-    pressReleases: {
-      title_en: "Press Releases",
-      title_ar: "البيانات الصحفية",
+    publication: {
+      title_en: "Publication",
+      title_ar: "منشور",
       imageUrl: "/card-front.jpg",
       slug: ""
     },
@@ -61,8 +61,8 @@ export default async function MediaCenterWrapper() {
   if (!response.success || !response.data) {
     console.error("Failed to fetch media center content:", response.error)
     // Return the component with fallback content instead of null
-    return <MediaCenter content={fallbackContent} />
+    return <MediaCenter content={fallbackContent as any} lang={lang} />
   }
 
-  return <MediaCenter content={response.data} />
+  return <MediaCenter content={response.data} lang={lang} />
 }

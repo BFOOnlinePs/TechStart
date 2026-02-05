@@ -20,8 +20,8 @@ export async function generateMetadata(props: NewsPageProps): Promise<Metadata> 
   const { lang } = params;
 
   return {
-    title: lang === 'ar' ? 'الأخبار والبيانات الصحفية - تيك ستارت' : 'News & Press Releases - TechStart',
-    description: lang === 'ar' 
+    title: lang === 'ar' ? 'النشرات الإخبارية والبيانات الصحفية - تيك ستارت' : 'News Letters & Press Releases - TechStart',
+    description: lang === 'ar'
       ? 'ابق على اطلاع بآخر الأخبار والمنشورات والإعلانات لدينا. اكتشف أحدث التطورات والأحداث في تيك ستارت.'
       : 'Stay updated with our latest news, publications, and announcements. Discover the latest developments and events at TechStart.',
   }
@@ -41,9 +41,9 @@ export default async function NewsPage(props: NewsPageProps) {
   const featuredPosts = featuredResponse.data || [];
   const allPosts = postsResponse.data || [];
 
-  const title = lang === 'ar' 
-    ? "الأخبار والبيانات الصحفية"
-    : "News & Press Releases";
+  const title = lang === 'ar'
+    ? "النشرات الإخبارية والبيانات الصحفية"
+    : "News Letters & Press Releases";
 
   const subtitle = lang === 'ar'
     ? "ابق على اطلاع بآخر الأخبار والمنشورات والإعلانات لدينا"
@@ -101,11 +101,11 @@ export default async function NewsPage(props: NewsPageProps) {
 
   return (
     <div className="bg-white dark:bg-gray-900">
-      <SeoMetadata 
-        path="/media-center/news" 
-        lang={lang} 
-        defaultTitle={lang === 'ar' ? 'الأخبار والبيانات الصحفية - تيك ستارت' : 'News & Press Releases - TechStart'}
-        defaultDescription={lang === 'ar' 
+      <SeoMetadata
+        path="/media-center/news"
+        lang={lang}
+        defaultTitle={lang === 'ar' ? 'النشرات الإخبارية والبيانات الصحفية - تيك ستارت' : 'News Letters & Press Releases - TechStart'}
+        defaultDescription={lang === 'ar'
           ? 'ابق على اطلاع بآخر الأخبار والمنشورات والإعلانات لدينا. اكتشف أحدث التطورات والأحداث في تيك ستارت.'
           : 'Stay updated with our latest news, publications, and announcements. Discover the latest developments and events at TechStart.'
         }

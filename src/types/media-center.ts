@@ -2,7 +2,7 @@ import { Post, Image, Video } from "@prisma/client"
 
 export interface MediaCenterContent {
   latestNews: Post | null
-  pressReleases: Post | null
+  publication: Post | null
   featuredImage: (Image & {
     gallery: {
       title_en: string

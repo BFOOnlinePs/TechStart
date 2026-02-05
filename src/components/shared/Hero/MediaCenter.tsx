@@ -12,11 +12,12 @@ import type { MediaCenterContent } from "@/types/media-center"
 
 interface MediaCenterProps {
   content: MediaCenterContent | null
+  lang: string
 }
 
-export function MediaCenter({ content }: MediaCenterProps) {
-  const { currentLang } = useLanguage()
-  const bgColor = "#1b316e" 
+export function MediaCenter({ content, lang }: MediaCenterProps) {
+  const currentLang = lang
+  const bgColor = "#1b316e"
   const [isLoaded, setIsLoaded] = useState(false)
 
   useEffect(() => {
@@ -41,9 +42,9 @@ export function MediaCenter({ content }: MediaCenterProps) {
       imageUrl: defaultImage,
       slug: ""
     } as any,
-    pressReleases: {
-      title_en: "Announcements",
-      title_ar: "إعلانات الصحفية",
+    publication: {
+      title_en: "Publication",
+      title_ar: "منشور",
       imageUrl: defaultImage,
       slug: ""
     } as any,
@@ -63,9 +64,9 @@ export function MediaCenter({ content }: MediaCenterProps) {
     } as any
   }
   /* eslint-enable @typescript-eslint/no-explicit-any */
-  
+
   const safeContent = content || fallbackContent
-  
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const getImageUrl = (obj: any, fallback = defaultImage): string => {
     if (!obj) return fallback
@@ -81,13 +82,13 @@ export function MediaCenter({ content }: MediaCenterProps) {
   const items = [
     {
       title: currentLang === "ar" ? "آخر الأخبار والتحديثات" : "Latest News & Updates",
-      description: getTitle(safeContent.latestNews, currentLang, 
+      description: getTitle(safeContent.latestNews, currentLang,
         currentLang === "ar" ? "استكشف إنجازاتنا وإعلاناتنا الأخيرة." : "Explore our recent achievements."),
       header: (
         <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden">
           <Image
             src={getImageUrl(safeContent.latestNews)}
-            alt={getTitle(safeContent.latestNews, currentLang, 
+            alt={getTitle(safeContent.latestNews, currentLang,
               currentLang === "ar" ? "صورة افتراضية" : "Default image")}
             width={600}
             height={300}
@@ -103,22 +104,20 @@ export function MediaCenter({ content }: MediaCenterProps) {
       ),
       className: "md:col-span-2",
       icon: <Copy />,
-      link: safeContent.latestNews?.slug 
-        ? `/${currentLang}/media-center/news/press-releases/${safeContent.latestNews.slug}` 
-        : `/${currentLang}/media-center/news/press-releases`,
+      link: `/${currentLang}/media-center/news`,
     },
     {
-      title: currentLang === "ar" ? "إعلانات الصحفية" : "Announcements",
-      description: currentLang === "ar" 
-        ? content?.pressReleases?.title_ar || "الإعلانات الرسمية والتغطية الصحفية."
-        : content?.pressReleases?.title_en || "Official announcements and press coverage.",
+      title: currentLang === "ar" ? "منشور" : "Publication",
+      description: currentLang === "ar"
+        ? content?.publication?.title_ar || "إصداراتنا ومنشوراتنا الأخيرة."
+        : content?.publication?.title_en || "Our latest publication.",
       header: (
         <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden">
           <Image
-            src={content?.pressReleases?.imageUrl || defaultImage}
-            alt={currentLang === "ar" 
-              ? content?.pressReleases?.title_ar || "صورة افتراضية"
-              : content?.pressReleases?.title_en || "Default image"}
+            src={content?.publication?.imageUrl || defaultImage}
+            alt={currentLang === "ar"
+              ? content?.publication?.title_ar || "صورة افتراضية"
+              : content?.publication?.title_en || "Default image"}
             width={300}
             height={300}
             className="w-full h-full object-cover"
@@ -128,7 +127,7 @@ export function MediaCenter({ content }: MediaCenterProps) {
       ),
       className: "md:col-span-1",
       icon: <File />,
-      link: content?.pressReleases ? `/${currentLang}/media-center/news/announcement/${content.pressReleases.slug}` : `/${currentLang}/media-center/news/announcement`,
+      link: content?.publication?.slug ? `/${currentLang}/media-center/news/publications/${content.publication.slug}` : `/${currentLang}/media-center/news/publications`,
     },
     {
       title: currentLang === "ar" ? "معرض الصور" : "Photo Gallery",
@@ -139,7 +138,7 @@ export function MediaCenter({ content }: MediaCenterProps) {
         <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden">
           <Image
             src={content?.featuredImage?.url || defaultImage}
-            alt={currentLang === "ar" 
+            alt={currentLang === "ar"
               ? content?.featuredImage?.title_ar || "صورة افتراضية"
               : content?.featuredImage?.title_en || "Default image"}
             width={300}
@@ -162,7 +161,7 @@ export function MediaCenter({ content }: MediaCenterProps) {
         <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden">
           <Image
             src={content?.featuredVideo?.thumbnail || defaultImage}
-            alt={currentLang === "ar" 
+            alt={currentLang === "ar"
               ? content?.featuredVideo?.title_ar || "صورة افتراضية"
               : content?.featuredVideo?.title_en || "Default image"}
             width={600}
@@ -211,8 +210,8 @@ export function MediaCenter({ content }: MediaCenterProps) {
 
       <BentoGrid className="relative max-w-4xl mx-auto md:auto-rows-[20rem] gap-4 p-4 bg-white/10 backdrop-blur-sm rounded-2xl shadow-lg">
         {items.map((item, i) => (
-          <Link 
-            key={i} 
+          <Link
+            key={i}
             href={item.link}
             className={`${item.className} block group hover:-translate-y-1 transition-all duration-300`}
           >

@@ -96,7 +96,7 @@ const AnimatedNetworkBackground: React.FC<AnimatedNetworkBackgroundProps> = Reac
       });
 
       ctx.clearRect(0, 0, dimensions.width, dimensions.height);
-      if (offscreenCanvasRef.current) {
+      if (offscreenCanvasRef.current && offscreenCanvasRef.current.width > 0 && offscreenCanvasRef.current.height > 0) {
         ctx.drawImage(offscreenCanvasRef.current, 0, 0);
       }
     };

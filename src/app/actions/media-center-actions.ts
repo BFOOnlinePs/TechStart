@@ -5,29 +5,28 @@ import { cache } from "react"
 import { PostType } from "@/lib/schema/schema"
 import type { MediaCenterContent } from "@/types/media-center"
 
-export const getMediaCenterContent = cache(async (): Promise<{ 
-  success: boolean; 
-  data: MediaCenterContent | null; 
-  error?: string 
+export const getMediaCenterContent = cache(async (): Promise<{
+  success: boolean;
+  data: MediaCenterContent | null;
+  error?: string
 }> => {
   try {
-    // Get latest featured blog posts and press releases
-    const [blogPosts, announcements] = await Promise.all([
+    // Get latest featured blog posts and publications
+    const [blogPosts, publications] = await Promise.all([
       db.post.findMany({
-        where: { 
+        where: {
           type: PostType.NEWS,
           featured: true,
-          published: true 
+          published: true
         },
         orderBy: { createdAt: 'desc' },
         take: 1
       }),
 
       db.post.findMany({
-        where: { 
-          type: PostType.ANNOUNCEMENT,
-          featured: true,
-          published: true 
+        where: {
+          type: PostType.PUBLICATION,
+          published: true
         },
         orderBy: { createdAt: 'desc' },
         take: 1
@@ -36,7 +35,7 @@ export const getMediaCenterContent = cache(async (): Promise<{
 
     // Get latest featured gallery image
     const featuredImage = await db.image.findFirst({
-      where: { 
+      where: {
         featured: true,
       },
       orderBy: { createdAt: 'desc' },
@@ -47,7 +46,7 @@ export const getMediaCenterContent = cache(async (): Promise<{
 
     // Get latest featured video
     const featuredVideo = await db.video.findFirst({
-      where: { 
+      where: {
         type: 'youtube',
       },
       orderBy: { createdAt: 'desc' },
@@ -60,7 +59,7 @@ export const getMediaCenterContent = cache(async (): Promise<{
       success: true,
       data: {
         latestNews: blogPosts[0] || null,
-        pressReleases: announcements[0] || null,
+        publication: publications[0] || null,
         featuredImage,
         featuredVideo
       }

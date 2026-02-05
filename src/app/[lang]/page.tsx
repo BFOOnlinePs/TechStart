@@ -20,7 +20,7 @@ export async function generateMetadata(props: PageProps): Promise<Metadata> {
   // Default metadata if no custom SEO is set
   return {
     title: lang === 'ar' ? 'تيك ستارت - الصفحة الرئيسية' : 'TechStart - Home',
-    description: lang === 'ar' 
+    description: lang === 'ar'
       ? 'تيك ستارت هي منصة تدريب متقدمة تهدف إلى تطوير المهارات التقنية في فلسطين'
       : 'TechStart is an advanced training platform aimed at developing technical skills in Palestine',
   }
@@ -32,11 +32,11 @@ export default async function Page(props: PageProps) {
 
   return (
     <>
-      <SeoMetadata 
-        path="/" 
-        lang={lang} 
+      <SeoMetadata
+        path="/"
+        lang={lang}
         defaultTitle={lang === 'ar' ? 'تيك ستارت - الصفحة الرئيسية' : 'TechStart - Home'}
-        defaultDescription={lang === 'ar' 
+        defaultDescription={lang === 'ar'
           ? 'تيك ستارت هي منصة تدريب متقدمة تهدف إلى تطوير المهارات التقنية في فلسطين'
           : 'TechStart is an advanced training platform aimed at developing technical skills in Palestine'
         }
@@ -50,7 +50,7 @@ export default async function Page(props: PageProps) {
           <ProgramsWrapper />
         </section>
         <section>
-          <MediaCenterWrapper />
+          <MediaCenterWrapper lang={lang} />
         </section>
         <HomeBannerWrapper />
       </main>

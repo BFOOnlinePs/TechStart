@@ -96,18 +96,16 @@ export default function CreateBlog() {
   // Generate slug from title_en
   useEffect(() => {
     const title = form.watch("title_en");
-    
-    
-    
+
+
+
     if (title) {
-      const slug = "brocali-revolutionizes-medical-education-with-techstart"
-    /*
+      const slug = title
         .toLowerCase()
-        .replace(/[^\w\s-]/g, "") // Remove special characters
+        .trim()
+        .replace(/[^\p{L}\p{N}\s-]/gu, "") // Remove special characters but keep Arabic/Unicode
         .replace(/\s+/g, "-") // Replace spaces with hyphens
         .replace(/-+/g, "-"); // Replace multiple hyphens with a single hyphen
-    */
-      
       form.setValue("slug", slug);
     }
   }, [form]);
@@ -135,13 +133,14 @@ export default function CreateBlog() {
         form.reset();
         router.push("/admin/blog");
         router.refresh();
-      } else if (result.error) {
+      } else if ('error' in result) {
+        const errorResult = result as any;
         toast({
           title: "Error",
           description:
-            typeof result.error === "object"
-              ? JSON.stringify(result.error)
-              : result.error,
+            typeof errorResult.error === "object"
+              ? JSON.stringify(errorResult.error)
+              : errorResult.error,
           variant: "destructive",
         });
       }
@@ -179,14 +178,13 @@ export default function CreateBlog() {
                       <FormLabel>Slug</FormLabel>
                       <FormControl>
                         <Input
-                          placeholder="Auto-generated from title"
+                          placeholder="Auto-generated from bare title"
                           {...field}
                           className="w-full"
-                          disabled
                         />
                       </FormControl>
                       <FormDescription>
-                        This will be automatically generated from the English title.
+                        This will be automatically generated from the English title but can be edited manually.
                       </FormDescription>
                       <FormMessage />
                     </FormItem>
@@ -208,12 +206,15 @@ export default function CreateBlog() {
                           </SelectTrigger>
                         </FormControl>
                         <SelectContent>
-                          <SelectItem value={PostType.NEWS}>News</SelectItem>
+                          <SelectItem value={PostType.NEWS}>News Letters & Press Releases</SelectItem>
                           <SelectItem value={PostType.PUBLICATION}>
                             Publication
                           </SelectItem>
                           <SelectItem value={PostType.ANNOUNCEMENT}>
                             Announcement
+                          </SelectItem>
+                          <SelectItem value={PostType.TESTIMONIALS}>
+                            Testimonials
                           </SelectItem>
                         </SelectContent>
                       </Select>
@@ -308,23 +309,6 @@ export default function CreateBlog() {
                       <div className="space-y-4">
                         <FormField
                           control={form.control}
-                          name="title_en"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Title (English)</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="Enter English title"
-                                  {...field}
-                                  className="w-full"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                        <FormField
-                          control={form.control}
                           name="description_en"
                           render={({ field }) => (
                             <FormItem>
@@ -363,24 +347,6 @@ export default function CreateBlog() {
                     </TabsContent>
                     <TabsContent value="arabic">
                       <div className="space-y-4">
-                        <FormField
-                          control={form.control}
-                          name="title_ar"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Title (Arabic)</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder="Enter Arabic title"
-                                  {...field}
-                                  className="w-full text-right"
-                                  dir="rtl"
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
                         <FormField
                           control={form.control}
                           name="description_ar"
@@ -485,59 +451,64 @@ export default function CreateBlog() {
                 <FormField
                   control={form.control}
                   name="featured"
-                    render={({ field }) => (
-                      <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-                        <FormControl>
-                          <Checkbox
-                            checked={field.value}
-                            onCheckedChange={field.onChange}
-                          />
-                        </FormControl>
-                        <div className="space-y-1 leading-none">
-                          <FormLabel>Featured</FormLabel>
-                          <FormDescription>
-                            This post will be highlighted if checked.
-                          </FormDescription>
-                        </div>
-                      </FormItem>
-                    )} 
-                  />
-                </div>
-                <FormField
-                  control={form.control}
-                  name="tags"
                   render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Tags</FormLabel>
+                    <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
                       <FormControl>
-                        <TagSelector
-                          tags={tags}
-                          selectedTags={field.value}
-                          onChange={field.onChange}
-                          onNewTag={(newTag) => setTags([...tags, newTag])}
+                        <Checkbox
+                          checked={field.value}
+                          onCheckedChange={field.onChange}
                         />
                       </FormControl>
-                      <FormDescription>
-                        Select existing tags or create new ones.
-                      </FormDescription>
-                      <FormMessage />
+                      <div className="space-y-1 leading-none">
+                        <FormLabel>Featured</FormLabel>
+                        <FormDescription>
+                          This post will be highlighted if checked.
+                        </FormDescription>
+                      </div>
                     </FormItem>
                   )}
                 />
-              </form>
-            </Form>
-          </CardContent>
-          <CardFooter>
-            <Button
-              type="submit"
-              onClick={form.handleSubmit(onSubmit)}
-              disabled={isSubmitting}
-              className="w-full"
-            >
-              {isSubmitting ? "Creating..." : "Create Post"}
-            </Button>
-          </CardFooter>
-        </Card>
-      </div>
-    );
-  }
+              </div>
+              <FormField
+                control={form.control}
+                name="tags"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Tags</FormLabel>
+                    <FormControl>
+                      <TagSelector
+                        tags={tags}
+                        selectedTags={field.value}
+                        onChange={field.onChange}
+                        onNewTag={(newTag) => setTags([...tags, newTag])}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Select existing tags or create new ones.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="text-red-500">
+                {Object.keys(form.formState.errors).length > 0 && (
+                  <pre>{JSON.stringify(form.formState.errors, null, 2)}</pre>
+                )}
+              </div>
+            </form>
+          </Form>
+        </CardContent>
+        <CardFooter>
+          <Button
+            type="submit"
+            onClick={form.handleSubmit(onSubmit)}
+            disabled={isSubmitting}
+            className="w-full"
+          >
+            {isSubmitting ? "Creating..." : "Create Post"}
+          </Button>
+        </CardFooter>
+      </Card>
+    </div>
+  );
+}

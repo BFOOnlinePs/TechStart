@@ -80,8 +80,8 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
 
   const buttonText = {
     overview: {
-      en: "Grant overview",
-      ar: "نظرة عامة على المنحة",
+      en: programId === "cm7urobwh0013t718p2dzugua" ? "Brochure" : "Grant overview",
+      ar: programId === "cm7urobwh0013t718p2dzugua" ? "بروشور" : "نظرة عامة على المنحة",
     },
     apply: {
       en: "APPLY HERE",
@@ -145,8 +145,8 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
             }
           </div>
 
-       
-       
+
+
 
           {(programId === "cm7urr4jk001dt718l3o9exad" || programId === "cm7urp3n80015t718sk4lzm6r") && (
             <div className={`mt-6 ${currentLang === 'ar' ? 'text-right' : 'text-left'}`}>
@@ -192,7 +192,7 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
       >
         {/* Tabs Title and Description Section */}
         <div className="mb-12 text-center">
-          <motion.h2 
+          <motion.h2
             className="text-3xl md:text-4xl font-bold mb-4 p-3 bg-gradient-to-r from-[#1C6AAF] to-[#872996] bg-clip-text text-transparent"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -200,15 +200,15 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
           >
             {programName
               ? programId === "cm7urobwh0013t718p2dzugua"
-              ? currentLang === "ar"
-                ? `أنشطة ${programName}`
-                : `${programName} Activities`
-              : currentLang === "ar"
-                ? `منحة ${programName}`
-                : `${programName} Windows`
+                ? currentLang === "ar"
+                  ? `أنشطة ${programName}`
+                  : `${programName} Activities`
+                : currentLang === "ar"
+                  ? `منحة ${programName}`
+                  : `${programName} Windows`
               : (currentLang === "ar" ? "تفاصيل البرنامج" : "Program Details")}
           </motion.h2>
-          <motion.div 
+          <motion.div
             className="w-24 h-1 bg-gradient-to-r from-[#1C6AAF] to-[#872996] mx-auto mb-6"
             initial={{ width: 0 }}
             animate={{ width: 96 }}
@@ -217,8 +217,8 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
         </div>
 
         {isMobile ? (
-          <Accordion 
-            type="single" 
+          <Accordion
+            type="single"
             defaultValue={activeAccordion}
             value={activeAccordion}
             onValueChange={setActiveAccordion}

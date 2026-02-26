@@ -81,11 +81,11 @@ export default function EditBlogForm({ blog }: { blog: Blog }) {
   // Helper function to ensure date is in YYYY-MM-DD format
   const formatDateToYYYYMMDD = (date: Date | string | null | undefined): string => {
     if (!date) return new Date().toISOString().split('T')[0];
-    
+
     try {
       const d = new Date(date);
       return d.toISOString().split('T')[0];
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (e) {
       return new Date().toISOString().split('T')[0];
     }
@@ -113,13 +113,13 @@ export default function EditBlogForm({ blog }: { blog: Blog }) {
 
   async function onSubmit(data: CreatePostInput) {
     setIsSubmitting(true)
-    
+
     try {
       // Create a new FormData object
       const formData = new FormData()
-      
+
       // Add all form fields
-      formData.append("slug", data.slug)
+      formData.append("slug", data.slug || "")
       formData.append("type", data.type)
       formData.append("title_en", data.title_en)
       formData.append("title_ar", data.title_ar)
@@ -127,16 +127,16 @@ export default function EditBlogForm({ blog }: { blog: Blog }) {
       formData.append("description_ar", data.description_ar || "")
       formData.append("content_en", data.content_en || "")
       formData.append("content_ar", data.content_ar || "")
-      
+
       // Handle optional fields
       if (data.pdfUrl) formData.append("pdfUrl", data.pdfUrl)
       if (data.imageUrl) formData.append("imageUrl", data.imageUrl)
       formData.append("readTime", data.readTime || "")
-      
+
       // Handle boolean fields
       formData.append("published", String(data.published))
       formData.append("featured", String(data.featured))
-      
+
       // Handle tags
       if (data.tags && data.tags.length > 0) {
         data.tags.forEach(tag => formData.append("tags", tag))
@@ -144,11 +144,11 @@ export default function EditBlogForm({ blog }: { blog: Blog }) {
         // Add empty tag array to prevent null tags
         formData.append("tags", "")
       }
-      
+
       // Handle date - ensure it's a valid date string
       const dateValue = data.publishedAt || formatDateToYYYYMMDD(new Date())
       formData.append("publishedAt", dateValue)
-      
+
       // Submit the form
       const result = await editPost(blog.id, formData)
       if (result.success) {
@@ -158,12 +158,13 @@ export default function EditBlogForm({ blog }: { blog: Blog }) {
         })
         router.push('/admin/blog')
         router.refresh()
-      } else if (result.error) {
+      } else if ('error' in result) {
+        const errorResult = result as any;
         toast({
           title: "Error",
-          description: typeof result.error === 'object' 
-            ? JSON.stringify(result.error) 
-            : result.error,
+          description: typeof errorResult.error === 'object'
+            ? JSON.stringify(errorResult.error)
+            : errorResult.error,
           variant: "destructive",
         })
       }
@@ -199,18 +200,19 @@ export default function EditBlogForm({ blog }: { blog: Blog }) {
                       <FormControl>
                         <Input placeholder="Enter post slug" {...field} className="w-full" />
                       </FormControl>
-                      <Button 
-                        type="button" 
-                        variant="outline" 
+                      <Button
+                        type="button"
+                        variant="outline"
                         onClick={() => {
                           const title = form.getValues("title_en");
                           if (title) {
                             const slug = title
                               .toLowerCase()
-                              .replace(/[^\w\s-]/g, "") // Remove special characters
+                              .trim()
+                              .replace(/[^\p{L}\p{N}\s-]/gu, "") // Remove special characters but keep unicode
                               .replace(/\s+/g, "-") // Replace spaces with hyphens
                               .replace(/-+/g, "-"); // Replace multiple hyphens with a single hyphen
-                            
+
                             form.setValue("slug", slug);
                           }
                         }}
@@ -238,9 +240,10 @@ export default function EditBlogForm({ blog }: { blog: Blog }) {
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        <SelectItem value={PostType.NEWS}>News</SelectItem>
+                        <SelectItem value={PostType.NEWS}>News Letters & Press Releases</SelectItem>
                         <SelectItem value={PostType.PUBLICATION}>Publication</SelectItem>
                         <SelectItem value={PostType.ANNOUNCEMENT}>Announcement</SelectItem>
+                        <SelectItem value={PostType.TESTIMONIALS}>Testimonials</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage />

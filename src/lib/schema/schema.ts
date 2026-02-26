@@ -3,7 +3,8 @@ import { z } from "zod";
 export const PostType = {
   NEWS: 'blog', // 'News & Press Releases' displayed in UI
   PUBLICATION: 'publication',
-  ANNOUNCEMENT: 'announcement'
+  ANNOUNCEMENT: 'announcement',
+  TESTIMONIALS: 'testimonials'
 } as const;
 
 export type PostTypeValue = typeof PostType[keyof typeof PostType];
@@ -12,7 +13,7 @@ export const createPostSchema = z.object({
   //slug: z.string().min(1, "Slug is required"),
   slug: z.string().optional(),
 
-  type: z.enum([PostType.NEWS, PostType.PUBLICATION, PostType.ANNOUNCEMENT]),
+  type: z.enum([PostType.NEWS, PostType.PUBLICATION, PostType.ANNOUNCEMENT, PostType.TESTIMONIALS]),
   title_en: z.string().min(1, "English title is required"),
   title_ar: z.string().min(1, "Arabic title is required"),
   description_en: z.string().optional().nullable().transform(val => val || ""),
@@ -27,8 +28,8 @@ export const createPostSchema = z.object({
   tags: z.array(z.string()),
   publishedAt: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Invalid date format").default(() => new Date().toISOString().split('T')[0]),
 }).refine((data) => {
-  if (data.type === PostType.PUBLICATION) {
-    return data.title_en && data.title_ar && data.pdfUrl;
+  if (data.type === PostType.PUBLICATION || data.type === PostType.TESTIMONIALS) {
+    return data.title_en && data.title_ar;
   }
   return data.content_en && data.content_ar;
 }, {

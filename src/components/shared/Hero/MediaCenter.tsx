@@ -107,6 +107,27 @@ export function MediaCenter({ content, lang }: MediaCenterProps) {
       link: `/${currentLang}/media-center/news`,
     },
     {
+      title: currentLang === "ar" ? "الشهادات" : "Testimonials",
+      description: currentLang === "ar"
+        ? "اقرأ ماذا يقول شركاؤنا ومستفيدونا عن تجاربهم."
+        : "Read what our partners and beneficiaries say about their experience.",
+      header: (
+        <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl overflow-hidden">
+          <Image
+            src={defaultImage}
+            alt={currentLang === "ar" ? "الشهادات" : "Testimonials"}
+            width={300}
+            height={300}
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          />
+        </div>
+      ),
+      className: "md:col-span-1",
+      icon: <File />,
+      link: `/${currentLang}/media-center/news/testimonials`,
+    },
+    {
       title: currentLang === "ar" ? "منشور" : "Publication",
       description: currentLang === "ar"
         ? content?.publication?.title_ar || "إصداراتنا ومنشوراتنا الأخيرة."
@@ -171,7 +192,7 @@ export function MediaCenter({ content, lang }: MediaCenterProps) {
           />
         </div>
       ),
-      className: "md:col-span-2",
+      className: "md:col-span-1",
       icon: <Video />,
       link: `/${currentLang}/media-center/gallery/videos`,
     },

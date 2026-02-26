@@ -58,8 +58,8 @@ export default async function MediaCenterWrapper({ lang }: { lang: string }) {
     }
   }
 
-  if (!response.success || !response.data) {
-    console.error("Failed to fetch media center content:", response.error)
+  if (!response || !response.success || !response.data) {
+    console.error("Failed to fetch media center content:", response?.error)
     // Return the component with fallback content instead of null
     return <MediaCenter content={fallbackContent as any} lang={lang} />
   }

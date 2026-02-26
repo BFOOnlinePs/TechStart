@@ -10,19 +10,20 @@ export async function createPost(formData: FormData) {
   }
 
   const data = {
-    slug: formData.get("slug"),
-    type: formData.get("type"),
-    title_en: formData.get("title_en"),
-    title_ar: formData.get("title_ar"),
-    description_en: formData.get("description_en") || "",
-    description_ar: formData.get("description_ar") || "",
-    content_en: formData.get("content_en") || "",
-    content_ar: formData.get("content_ar") || "",
-    pdfUrl: formData.get("pdfUrl"),
-    imageUrl: formData.get("imageUrl"),
-    readTime: formData.get("readTime") || "",
+    slug: formData.get("slug") as string || "",
+    type: formData.get("type") as string,
+    title_en: formData.get("title_en") as string,
+    title_ar: formData.get("title_ar") as string,
+    description_en: (formData.get("description_en") as string) || "",
+    description_ar: (formData.get("description_ar") as string) || "",
+    content_en: (formData.get("content_en") as string) || "",
+    content_ar: (formData.get("content_ar") as string) || "",
+    pdfUrl: formData.get("pdfUrl") as string | null,
+    imageUrl: formData.get("imageUrl") as string | null,
+    readTime: (formData.get("readTime") as string) || "",
     published: formData.get("published") === "true",
     featured: formData.get("featured") === "true",
+    publishedAt: formData.get("publishedAt") as string || new Date().toISOString(),
     tags: formData.getAll("tags"),
   }
 
@@ -31,8 +32,9 @@ export async function createPost(formData: FormData) {
       ...data,
       imageUrl: data.imageUrl || null,
       pdfUrl: data.pdfUrl || null,
-      content_en: data.type === PostType.PUBLICATION ? "" : (data.content_en || ""),
-      content_ar: data.type === PostType.PUBLICATION ? "" : (data.content_ar || ""),
+      publishedAt: new Date(data.publishedAt),
+      content_en: (data.type === PostType.PUBLICATION || data.type === PostType.TESTIMONIALS) ? "" : (data.content_en || ""),
+      content_ar: (data.type === PostType.PUBLICATION || data.type === PostType.TESTIMONIALS) ? "" : (data.content_ar || ""),
       tags: {
         connect: data.tags.map((tagId) => ({
           id: parseInt(tagId.toString(), 10)
@@ -50,6 +52,6 @@ export async function createPost(formData: FormData) {
     return { success: true, post }
   } catch (error) {
     console.error("Failed to create post:", error)
-    return { error: "Failed to create post" }
+    return { error: error instanceof Error ? error.message : String(error) }
   }
 }

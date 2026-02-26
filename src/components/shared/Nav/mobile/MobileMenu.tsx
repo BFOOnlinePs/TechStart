@@ -145,6 +145,11 @@ export default function MobileMenu({
           name: translations.menuItems.mediaCenter.announcements,
           href: `/${currentLang}/media-center/news/announcements`,
         },
+        {
+          id: "testimonials",
+          name: translations.menuItems.mediaCenter.testimonials,
+          href: `/${currentLang}/media-center/news/testimonials`,
+        }
       ],
     },
   ];
@@ -160,10 +165,10 @@ export default function MobileMenu({
       name: translations.menuItems.contactUs.complaints,
       href: `/${currentLang}/submit-complaint`,
     },
-    { 
-      id: "faqs", 
-      name: translations.menuItems.contactUs.faqs, 
-      href: `/${currentLang}/FAQs` 
+    {
+      id: "faqs",
+      name: translations.menuItems.contactUs.faqs,
+      href: `/${currentLang}/FAQs`
     },
   ];
 
@@ -196,7 +201,7 @@ export default function MobileMenu({
                 <X size={24} />
               </button>
             </div>
-            
+
             <nav className="flex-grow p-4 space-y-3">
               {/* Home link with icon */}
               <Link
@@ -221,9 +226,8 @@ export default function MobileMenu({
                     <span className="line-clamp-2">{translations.aboutUs}</span>
                     <ChevronRight
                       size={20}
-                      className={`transform transition-transform duration-200 flex-shrink-0 ${
-                        expandedSection === "aboutus" ? "rotate-90" : ""
-                      }`}
+                      className={`transform transition-transform duration-200 flex-shrink-0 ${expandedSection === "aboutus" ? "rotate-90" : ""
+                        }`}
                     />
                   </button>
                   <AnimatePresence>
@@ -259,9 +263,8 @@ export default function MobileMenu({
                     <span className="line-clamp-2">{translations.programs}</span>
                     <ChevronRight
                       size={20}
-                      className={`transform transition-transform duration-200 flex-shrink-0 ${
-                        expandedSection === "programs" ? "rotate-90" : ""
-                      }`}
+                      className={`transform transition-transform duration-200 flex-shrink-0 ${expandedSection === "programs" ? "rotate-90" : ""
+                        }`}
                     />
                   </button>
                   <AnimatePresence>
@@ -287,11 +290,10 @@ export default function MobileMenu({
                                 <span className="line-clamp-2">{isArabic ? category.name_ar : category.name_en}</span>
                                 <ChevronRight
                                   size={16}
-                                  className={`transform transition-transform duration-200 flex-shrink-0 ml-2 ${
-                                    expandedProgCategory === category.id
+                                  className={`transform transition-transform duration-200 flex-shrink-0 ml-2 ${expandedProgCategory === category.id
                                       ? "rotate-90"
                                       : ""
-                                  }`}
+                                    }`}
                                 />
                               </button>
 
@@ -335,9 +337,8 @@ export default function MobileMenu({
                     <span className="line-clamp-2">{translations.mediaCenter}</span>
                     <ChevronRight
                       size={20}
-                      className={`transform transition-transform duration-200 flex-shrink-0 ${
-                        expandedSection === "mediacenter" ? "rotate-90" : ""
-                      }`}
+                      className={`transform transition-transform duration-200 flex-shrink-0 ${expandedSection === "mediacenter" ? "rotate-90" : ""
+                        }`}
                     />
                   </button>
                   <AnimatePresence>
@@ -358,9 +359,8 @@ export default function MobileMenu({
                               <span className="line-clamp-2">{section.name}</span>
                               <ChevronRight
                                 size={16}
-                                className={`transform transition-transform duration-200 flex-shrink-0 ml-2 ${
-                                  expandedMediaSubsection === section.id ? "rotate-90" : ""
-                                }`}
+                                className={`transform transition-transform duration-200 flex-shrink-0 ml-2 ${expandedMediaSubsection === section.id ? "rotate-90" : ""
+                                  }`}
                               />
                             </button>
 
@@ -413,9 +413,8 @@ export default function MobileMenu({
                     <span className="line-clamp-2">{translations.contactUs}</span>
                     <ChevronRight
                       size={20}
-                      className={`transform transition-transform duration-200 flex-shrink-0 ${
-                        expandedSection === "contactus" ? "rotate-90" : ""
-                      }`}
+                      className={`transform transition-transform duration-200 flex-shrink-0 ${expandedSection === "contactus" ? "rotate-90" : ""
+                        }`}
                     />
                   </button>
                   <AnimatePresence>

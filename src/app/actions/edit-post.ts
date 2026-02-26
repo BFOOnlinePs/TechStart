@@ -15,7 +15,7 @@ export async function editPost(id: number, formData: FormData) {
     const type = formData.get("type")?.toString();
     const title_en = formData.get("title_en")?.toString();
     const title_ar = formData.get("title_ar")?.toString();
-    
+
     if (!slug || !type || !title_en || !title_ar) {
       return { error: "Required fields are missing" };
     }
@@ -32,7 +32,7 @@ export async function editPost(id: number, formData: FormData) {
     const featured = formData.get("featured") === "true";
     const tags = formData.getAll("tags").map(tag => tag.toString());
     const publishedAt = formData.get("publishedAt")?.toString();
-    
+
     // Create update data
     const updateData = {
       slug,
@@ -41,8 +41,8 @@ export async function editPost(id: number, formData: FormData) {
       title_ar,
       description_en,
       description_ar,
-      content_en: type === PostType.PUBLICATION ? "" : content_en,
-      content_ar: type === PostType.PUBLICATION ? "" : content_ar,
+      content_en: (type === PostType.PUBLICATION || type === PostType.TESTIMONIALS) ? "" : content_en,
+      content_ar: (type === PostType.PUBLICATION || type === PostType.TESTIMONIALS) ? "" : content_ar,
       pdfUrl,
       imageUrl,
       readTime,

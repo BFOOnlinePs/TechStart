@@ -38,6 +38,7 @@ const navbarTranslations: NavbarTranslations = {
         newsPress: "News Letters & Press Releases",
         publications: "Publications",
         announcements: "Announcements",
+        testimonials: "Testimonials",
       },
       contactUs: {
         contact: "Contact Us",
@@ -78,6 +79,7 @@ const navbarTranslations: NavbarTranslations = {
         newsPress: "النشرات الإخبارية والبيانات الصحفية",
         publications: "المنشورات",
         announcements: "الإعلانات",
+        testimonials: "الشهادات",
       },
       contactUs: {
         contact: "اتصل بنا",

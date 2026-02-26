@@ -51,6 +51,7 @@ export interface MediaCenterMenuItems {
   newsPress: string;
   publications: string;
   announcements: string;
+  testimonials: string;
 }
 
 export interface ContactUsMenuItems {

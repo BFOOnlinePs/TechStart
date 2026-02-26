@@ -21,6 +21,7 @@ const EXISTING_PAGES = [
   { path: '/media-center/news/blog', type: 'blog' as const, name_en: 'Blog', name_ar: 'المدونة' },
   { path: '/media-center/news/publications', type: 'blog' as const, name_en: 'Publications', name_ar: 'المنشورات' },
   { path: '/media-center/news/announcements', type: 'blog' as const, name_en: 'Announcements', name_ar: 'الإعلانات' },
+  { path: '/media-center/news/testimonials', type: 'blog' as const, name_en: 'Testimonials', name_ar: 'الشهادات' },
   { path: '/media-center/gallery/photos', type: 'gallery' as const, name_en: 'Photo Gallery', name_ar: 'معرض الصور' },
   { path: '/media-center/gallery/videos', type: 'gallery' as const, name_en: 'Video Gallery', name_ar: 'معرض الفيديو' },
 ] as const;
@@ -49,7 +50,7 @@ export async function createOrUpdateSeoMetadata(data: SeoMetadataInput) {
           structuredData: data.structuredData,
         }
       })
-      
+
       revalidatePath("/admin/seo")
       return { success: true, metadata }
     } else {
@@ -70,7 +71,7 @@ export async function createOrUpdateSeoMetadata(data: SeoMetadataInput) {
           structuredData: data.structuredData,
         }
       })
-      
+
       revalidatePath("/admin/seo")
       return { success: true, metadata }
     }
@@ -88,7 +89,7 @@ export const getSeoPages = cache(async () => {
       acc[meta.pagePath] = meta
       return acc
     }, {} as Record<string, { id: string, pagePath: string }>)
-    
+
     // Map existing pages with their metadata status
     const pages = EXISTING_PAGES.map(page => ({
       id: page.path, // Use path as ID
@@ -98,7 +99,7 @@ export const getSeoPages = cache(async () => {
       type: page.type,
       hasMetadata: !!metadataByPath[page.path]
     }))
-    
+
     return { success: true, pages }
   } catch (error) {
     console.error("Failed to fetch SEO pages:", error)
@@ -111,7 +112,7 @@ export const getSeoMetadataForPage = cache(async (path: string) => {
     const metadata = await db.seoMetadata.findFirst({
       where: { pagePath: path }
     })
-    
+
     return { success: true, metadata }
   } catch (error) {
     console.error("Failed to fetch SEO metadata:", error)
@@ -124,11 +125,11 @@ export const getSeoMetadataByPath = cache(async (path: string, lang: string = 'e
     const metadata = await db.seoMetadata.findFirst({
       where: { pagePath: path }
     })
-    
+
     if (!metadata) {
       return { success: false, metadata: null }
     }
-    
+
     // Format the metadata for use in the page head
     const formattedMetadata = {
       title: lang === 'ar' ? metadata.title_ar : metadata.title_en,
@@ -139,7 +140,7 @@ export const getSeoMetadataByPath = cache(async (path: string, lang: string = 'e
       noIndex: metadata.noIndex,
       structuredData: metadata.structuredData,
     }
-    
+
     return { success: true, metadata: formattedMetadata }
   } catch (error) {
     console.error("Failed to fetch SEO metadata by path:", error)

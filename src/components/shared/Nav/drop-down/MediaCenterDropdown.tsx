@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef} from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { DropdownProps } from "@/types/navbar";
@@ -27,7 +27,8 @@ export const MediaCenterDropdown: React.FC<DropdownProps> = ({ setPosition, tran
             subItems: [
                 { id: "news-press", name: translations.menuItems.mediaCenter.newsPress, href: "/media-center/news" },
                 { id: "publications", name: translations.menuItems.mediaCenter.publications, href: "/media-center/news/publications" },
-                { id: "announcements", name: translations.menuItems.mediaCenter.announcements, href: "/media-center/news/announcements" }
+                { id: "announcements", name: translations.menuItems.mediaCenter.announcements, href: "/media-center/news/announcements" },
+                { id: "testimonials", name: translations.menuItems.mediaCenter.testimonials, href: "/media-center/news/testimonials" }
             ],
         },
     ];
@@ -59,9 +60,8 @@ export const MediaCenterDropdown: React.FC<DropdownProps> = ({ setPosition, tran
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 10, scale: 0.95 }}
                         transition={{ type: "spring", stiffness: 100, damping: 15 }}
-                        className={`absolute mt-2 w-64 rounded-xl bg-white/90 backdrop-blur-md shadow-lg shadow-purple-500/20 border border-purple-100/20 overflow-hidden ${
-                            currentLang === "ar" ? "right-0" : "left-0"
-                        }`}
+                        className={`absolute mt-2 w-64 rounded-xl bg-white/90 backdrop-blur-md shadow-lg shadow-purple-500/20 border border-purple-100/20 overflow-hidden ${currentLang === "ar" ? "right-0" : "left-0"
+                            }`}
                     >
                         <div className="py-1">
                             {menuItems.map((item) => (

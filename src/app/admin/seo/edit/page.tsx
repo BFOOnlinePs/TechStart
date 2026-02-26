@@ -30,6 +30,7 @@ const EXISTING_PAGES = [
   { path: '/media-center/news/blog', type: 'blog' as const, name_en: 'News & Press Releases', name_ar: 'الأخبار والبيانات الصحفية' },
   { path: '/media-center/news/publications', type: 'blog' as const, name_en: 'Publications', name_ar: 'المنشورات' },
   { path: '/media-center/news/announcements', type: 'blog' as const, name_en: 'Announcements', name_ar: 'الإعلانات' },
+  { path: '/media-center/news/testimonials', type: 'blog' as const, name_en: 'Testimonials', name_ar: 'الشهادات' },
   { path: '/media-center/gallery/photos', type: 'gallery' as const, name_en: 'Photo Gallery', name_ar: 'معرض الصور' },
   { path: '/media-center/gallery/videos', type: 'gallery' as const, name_en: 'Video Gallery', name_ar: 'معرض الفيديو' },
 ] as const;
@@ -50,21 +51,21 @@ export default async function SeoEditPage(props: SeoEditPageProps) {
 
   // Get existing metadata if any
   const metadataResult = await getSeoMetadataForPage(path)
-  const existingMetadata = metadataResult.success && metadataResult.metadata 
+  const existingMetadata = metadataResult.success && metadataResult.metadata
     ? {
-        pagePath: metadataResult.metadata.pagePath,
-        pageType: metadataResult.metadata.pageType,
-        title_en: metadataResult.metadata.title_en,
-        title_ar: metadataResult.metadata.title_ar,
-        description_en: metadataResult.metadata.description_en,
-        description_ar: metadataResult.metadata.description_ar,
-        keywords_en: metadataResult.metadata.keywords_en || "",
-        keywords_ar: metadataResult.metadata.keywords_ar || "",
-        ogImage: metadataResult.metadata.ogImage || "",
-        canonicalUrl: metadataResult.metadata.canonicalUrl || "",
-        noIndex: metadataResult.metadata.noIndex || false,
-        structuredData: metadataResult.metadata.structuredData || "",
-      }
+      pagePath: metadataResult.metadata.pagePath,
+      pageType: metadataResult.metadata.pageType,
+      title_en: metadataResult.metadata.title_en,
+      title_ar: metadataResult.metadata.title_ar,
+      description_en: metadataResult.metadata.description_en,
+      description_ar: metadataResult.metadata.description_ar,
+      keywords_en: metadataResult.metadata.keywords_en || "",
+      keywords_ar: metadataResult.metadata.keywords_ar || "",
+      ogImage: metadataResult.metadata.ogImage || "",
+      canonicalUrl: metadataResult.metadata.canonicalUrl || "",
+      noIndex: metadataResult.metadata.noIndex || false,
+      structuredData: metadataResult.metadata.structuredData || "",
+    }
     : undefined
 
   return (
@@ -75,10 +76,10 @@ export default async function SeoEditPage(props: SeoEditPageProps) {
           Edit SEO metadata for <span className="font-medium">{page.name_en}</span> ({page.path})
         </p>
       </div>
-      
-      <SeoMetadataForm 
-        page={page} 
-        initialData={existingMetadata} 
+
+      <SeoMetadataForm
+        page={page}
+        initialData={existingMetadata}
       />
     </div>
   )

@@ -148,30 +148,37 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
 
 
 
-          {(programId === "cm7urr4jk001dt718l3o9exad" || programId === "cm7urp3n80015t718sk4lzm6r") && (
-            <div className={`mt-6 ${currentLang === 'ar' ? 'text-right' : 'text-left'}`}>
-              <Link
-                href={
-                  programId === "cm7urr4jk001dt718l3o9exad"
-                    ? "https://fs20.formsite.com/DAIForms/smr0etmskv/login"
-                    : "https://fs20.formsite.com/DAIForms/np9dh3xik0/login"
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <Button
-                  size="default"
-                  className="bg-gradient-to-r from-[#1C6AAF] to-[#872996] hover:opacity-90 
-                 transition-opacity shadow-lg hover:shadow-xl text-sm sm:text-base
-                 px-8 py-2.5"
+          {(programId === "cm7urr4jk001dt718l3o9exad" ||
+            programId === "cm7urp3n80015t718sk4lzm6r" ||
+            programId === "cm7urqf980019t7180rqnka2e" ||
+            programId === "cm7urppnj0017t718ulz08t80") && (
+              <div className={`mt-6 ${currentLang === 'ar' ? 'text-right' : 'text-left'}`}>
+                <Link
+                  href={
+                    programId === "cm7urr4jk001dt718l3o9exad"
+                      ? "https://fs20.formsite.com/DAIForms/smr0etmskv/login"
+                      : programId === "cm7urqf980019t7180rqnka2e"
+                        ? "https://fs20.formsite.com/DAIForms/ij4st1najg/login"
+                        : programId === "cm7urppnj0017t718ulz08t80"
+                          ? "#"
+                          : "https://fs20.formsite.com/DAIForms/np9dh3xik0/login" // هذا الرابط للمشروع cm7urp3n80015t718sk4lzm6r
+                  }
+                  target={programId === "cm7urppnj0017t718ulz08t80" ? "_self" : "_blank"}
+                  rel="noopener noreferrer"
                 >
-                  {currentLang === "ar"
-                    ? buttonText.apply.ar
-                    : buttonText.apply.en}
-                </Button>
-              </Link>
-            </div>
-          )}
+                  <Button
+                    size="default"
+                    className="bg-gradient-to-r from-[#1C6AAF] to-[#872996] hover:opacity-90 
+        transition-opacity shadow-lg hover:shadow-xl text-sm sm:text-base
+        px-8 py-2.5"
+                  >
+                    {currentLang === "ar"
+                      ? buttonText.apply.ar
+                      : buttonText.apply.en}
+                  </Button>
+                </Link>
+              </div>
+            )}
         </div>
 
         <p className={`text-xs sm:text-sm text-gray-500 italic ${currentLang === 'ar' ? 'text-right' : 'text-left'}`}>

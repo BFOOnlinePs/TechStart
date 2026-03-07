@@ -26,6 +26,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { TagSelector } from "@/components/admin/Gallary/TagSelector"
 import { RichTextEditor } from '@/components/Editor/RichTextEditor'
+import { FileUpload } from "@/lib/FileUpload"
 
 interface Tag {
   id: string;
@@ -44,6 +45,7 @@ interface Blog {
   content_en: string;
   content_ar: string;
   imageUrl: string | null;
+  pdfUrl: string | null;
   readTime: string | null;
   published: boolean;
   featured: boolean;
@@ -103,6 +105,7 @@ export default function EditBlogForm({ blog }: { blog: Blog }) {
       content_en: blog.content_en || "",
       content_ar: blog.content_ar || "",
       imageUrl: blog.imageUrl,
+      pdfUrl: blog.pdfUrl || "",
       readTime: blog.readTime || "",
       published: blog.published,
       featured: blog.featured,
@@ -110,6 +113,8 @@ export default function EditBlogForm({ blog }: { blog: Blog }) {
       publishedAt: formatDateToYYYYMMDD(blog.publishedAt),
     },
   })
+
+  const isPublication = form.watch("type") === PostType.PUBLICATION;
 
   async function onSubmit(data: CreatePostInput) {
     setIsSubmitting(true)
@@ -479,6 +484,34 @@ export default function EditBlogForm({ blog }: { blog: Blog }) {
                 </FormItem>
               )}
             />
+            {isPublication && (
+              <FormField
+                control={form.control}
+                name="pdfUrl"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>PDF URL / Document</FormLabel>
+                    <FormControl>
+                      <div className="space-y-4">
+                        <Input
+                          placeholder="Enter PDF URL or use upload below"
+                          {...field}
+                          value={field.value || ""}
+                          className="w-full"
+                        />
+                        <FileUpload
+                          onUpload={(urls) => field.onChange(urls[0])}
+                          defaultFiles={field.value ? [field.value] : []}
+                          maxFiles={1}
+                          acceptedFileTypes={{ "application/pdf": [".pdf"] }}
+                        />
+                      </div>
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            )}
           </form>
         </Form>
       </CardContent>

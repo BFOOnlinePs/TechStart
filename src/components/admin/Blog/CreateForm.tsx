@@ -290,14 +290,22 @@ export default function CreateBlog() {
                     name="pdfUrl"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>PDF Document</FormLabel>
+                        <FormLabel>PDF URL / Document</FormLabel>
                         <FormControl>
-                          <FileUpload
-                            onUpload={(urls) => field.onChange(urls[0])}
-                            defaultFiles={field.value ? [field.value] : []}
-                            maxFiles={1}
-                            acceptedFileTypes={{ "application/pdf": [".pdf"] }}
-                          />
+                          <div className="space-y-4">
+                            <Input
+                              placeholder="Enter PDF URL or use upload below"
+                              {...field}
+                              value={field.value || ""}
+                              className="w-full"
+                            />
+                            <FileUpload
+                              onUpload={(urls) => field.onChange(urls[0])}
+                              defaultFiles={field.value ? [field.value] : []}
+                              maxFiles={1}
+                              acceptedFileTypes={{ "application/pdf": [".pdf"] }}
+                            />
+                          </div>
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -488,6 +496,7 @@ export default function CreateBlog() {
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
+
                 )}
               />
               <div className="text-red-500">

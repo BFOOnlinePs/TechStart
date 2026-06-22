@@ -29,6 +29,18 @@ interface DynamicTabsProps {
   programId?: string;
 }
 
+const BUSINESS_DEVELOPMENT_EXPERTS_PROGRAM_ID = "cm7urobwh0013t718p2dzugua";
+const BUSINESS_DEVELOPMENT_EXPERTS_APPLY_LINKS = [
+  {
+    label: "APPLY HERE AS A BDE",
+    href: "https://fs20.formsite.com/DAIForms/oi5kniifsp/index",
+  },
+  {
+    label: "APPLY HERE AS A COMPANY",
+    href: "https://fs20.formsite.com/DAIForms/bzvytcpbab/index",
+  },
+];
+
 export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory, programName, programId }: DynamicTabsProps): JSX.Element {
   const { currentLang } = useLanguage();
   const [activeTab, setActiveTab] = useState(tabs[0]?.slug || "");
@@ -61,6 +73,8 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
 
   if (!tabs.length) return <></>;
 
+  const isBusinessDevelopmentExpertsProgram = programId === BUSINESS_DEVELOPMENT_EXPERTS_PROGRAM_ID;
+
   const allTabs = [
     ...tabs,
     {
@@ -80,8 +94,8 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
 
   const buttonText = {
     overview: {
-      en: programId === "cm7urobwh0013t718p2dzugua" ? "Brochure" : "Grant overview",
-      ar: programId === "cm7urobwh0013t718p2dzugua" ? "بروشور" : "نظرة عامة على المنحة",
+      en: "Grant overview",
+      ar: "نظرة عامة على المنحة",
     },
     apply: {
       en: "APPLY HERE",
@@ -111,39 +125,60 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
 
       <div className="space-y-4">
         <div className="w-full">
-          <div className={`flex flex-wrap gap-3 ${currentLang === 'ar' ? 'justify-end' : 'justify-start'}`}>
-            <Button
-              variant="outline"
-              size="sm"
-              className="hover:bg-gradient-to-r hover:from-[#1C6AAF]/10 hover:to-[#872996]/10 
-                       transition-all duration-300 border-gray-200 min-w-[120px] h-10 px-4 py-2"
-              onClick={() => handleProcessDetailsClick(tab)}
-              disabled={!tab.processFile}
-            >
-              {currentLang === "ar" ? buttonText.overview.ar : buttonText.overview.en}
-            </Button>
+          {!isBusinessDevelopmentExpertsProgram && (
+            <div className={`flex flex-wrap gap-3 ${currentLang === 'ar' ? 'justify-end' : 'justify-start'}`}>
+              <Button
+                variant="outline"
+                size="sm"
+                className="hover:bg-gradient-to-r hover:from-[#1C6AAF]/10 hover:to-[#872996]/10
+                         transition-all duration-300 border-gray-200 min-w-[120px] h-10 px-4 py-2"
+                onClick={() => handleProcessDetailsClick(tab)}
+                disabled={!tab.processFile}
+              >
+                {currentLang === "ar" ? buttonText.overview.ar : buttonText.overview.en}
+              </Button>
 
-            {tab.buttons && tab.buttons.length > 0 &&
-              tab.buttons.map((button) => (
+              {tab.buttons && tab.buttons.length > 0 &&
+                tab.buttons.map((button) => (
+                  <Button
+                    key={button.id}
+                    variant="outline"
+                    size="sm"
+                    className="h-10 min-w-[120px] px-4 py-2 hover:bg-gradient-to-r hover:from-[#1C6AAF]/10
+                             hover:to-[#872996]/10 border-gray-200 transition-all duration-300"
+                    onClick={() => {
+                      setSelectedButton({
+                        title: currentLang === "ar" ? button.name_ar : button.name_en,
+                        content: currentLang === "ar" ? button.content_ar : button.content_en,
+                      });
+                      setIsDialogOpen(true);
+                    }}
+                  >
+                    {currentLang === "ar" ? button.name_ar : button.name_en}
+                  </Button>
+                ))
+              }
+            </div>
+          )}
+
+          {isBusinessDevelopmentExpertsProgram && (
+            <div className={`flex flex-wrap gap-3 ${currentLang === 'ar' ? 'justify-end' : 'justify-start'}`}>
+              {BUSINESS_DEVELOPMENT_EXPERTS_APPLY_LINKS.map((applyLink) => (
                 <Button
-                  key={button.id}
-                  variant="outline"
-                  size="sm"
-                  className="h-10 min-w-[120px] px-4 py-2 hover:bg-gradient-to-r hover:from-[#1C6AAF]/10 
-                           hover:to-[#872996]/10 border-gray-200 transition-all duration-300"
-                  onClick={() => {
-                    setSelectedButton({
-                      title: currentLang === "ar" ? button.name_ar : button.name_en,
-                      content: currentLang === "ar" ? button.content_ar : button.content_en,
-                    });
-                    setIsDialogOpen(true);
-                  }}
+                  key={applyLink.href}
+                  asChild
+                  size="default"
+                  className="bg-gradient-to-r from-[#1C6AAF] to-[#872996] hover:opacity-90
+                            transition-opacity shadow-lg hover:shadow-xl text-sm sm:text-base
+                            px-8 py-2.5"
                 >
-                  {currentLang === "ar" ? button.name_ar : button.name_en}
+                  <Link href={applyLink.href} target="_blank" rel="noopener noreferrer">
+                    {applyLink.label}
+                  </Link>
                 </Button>
-              ))
-            }
-          </div>
+              ))}
+            </div>
+          )}
 
 
 

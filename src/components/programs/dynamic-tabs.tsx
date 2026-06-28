@@ -98,6 +98,8 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
   if (!tabs.length) return <></>;
 
   const isBusinessDevelopmentExpertsProgram = programId === BUSINESS_DEVELOPMENT_EXPERTS_PROGRAM_ID;
+  const activeTabIsBusinessDevelopmentExperts =
+    normalizeTabIdentifier(activeTab) === BUSINESS_DEVELOPMENT_EXPERTS_TAB_LABEL;
 
   const allTabs = [
     ...tabs,
@@ -186,7 +188,7 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
             </div>
           )}
 
-          {isBusinessDevelopmentExpertsProgram && isBusinessDevelopmentExpertsTab(tab) && (
+          {isBusinessDevelopmentExpertsProgram && activeTabIsBusinessDevelopmentExperts && isBusinessDevelopmentExpertsTab(tab) && (
             <div className={`flex flex-wrap gap-3 ${currentLang === 'ar' ? 'justify-end' : 'justify-start'}`}>
               {BUSINESS_DEVELOPMENT_EXPERTS_APPLY_LINKS.map((applyLink) => (
                 <Button
@@ -288,7 +290,12 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
             type="single"
             defaultValue={activeAccordion}
             value={activeAccordion}
-            onValueChange={setActiveAccordion}
+            onValueChange={(value) => {
+              setActiveAccordion(value);
+              if (value) {
+                setActiveTab(value);
+              }
+            }}
             className="w-full space-y-4"
           >
             {allTabs.map((tab) => (

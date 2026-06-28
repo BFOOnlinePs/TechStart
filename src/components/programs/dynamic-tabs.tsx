@@ -40,6 +40,30 @@ const BUSINESS_DEVELOPMENT_EXPERTS_APPLY_LINKS = [
     href: "https://fs20.formsite.com/DAIForms/bzvytcpbab/index",
   },
 ];
+const BUSINESS_DEVELOPMENT_EXPERTS_TAB_LABEL = "business development experts";
+
+const normalizeTabIdentifier = (value?: string | null) => {
+  if (!value) return "";
+
+  let decodedValue = value;
+  try {
+    decodedValue = decodeURIComponent(value);
+  } catch {
+    decodedValue = value;
+  }
+
+  return decodedValue
+    .replace(/[-_]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+};
+
+const isBusinessDevelopmentExpertsTab = (tab: ExtendedProgramTab) =>
+  [tab.slug, tab.title_en].some(
+    (identifier) =>
+      normalizeTabIdentifier(identifier) === BUSINESS_DEVELOPMENT_EXPERTS_TAB_LABEL
+  );
 
 export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory, programName, programId }: DynamicTabsProps): JSX.Element {
   const { currentLang } = useLanguage();
@@ -80,6 +104,7 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
     {
       id: "faqs",
       slug: "faqs",
+      status: 1,
       title_en: "FAQs",
       title_ar: "الأسئلة الشائعة",
       content_en: "",
@@ -161,7 +186,7 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
             </div>
           )}
 
-          {isBusinessDevelopmentExpertsProgram && (
+          {isBusinessDevelopmentExpertsProgram && isBusinessDevelopmentExpertsTab(tab) && (
             <div className={`flex flex-wrap gap-3 ${currentLang === 'ar' ? 'justify-end' : 'justify-start'}`}>
               {BUSINESS_DEVELOPMENT_EXPERTS_APPLY_LINKS.map((applyLink) => (
                 <Button

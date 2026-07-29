@@ -42,6 +42,13 @@ const BUSINESS_DEVELOPMENT_EXPERTS_APPLY_LINKS = [
 ];
 const BUSINESS_DEVELOPMENT_EXPERTS_TAB_LABEL = "business development experts";
 
+const HORIZONS_SPECIALIZED_CONFERENCE_TAB_LABEL = "specialized conference support";
+const HORIZONS_SPECIALIZED_CONFERENCE_LINKS = {
+  overview:
+    "https://smesvpyaajnu4wso.public.blob.vercel-storage.com/Horizons%20Grant%20Overview%20Document%20Specialized%20Conferences%29-ZjkTzNIrI6cqlTe7C9MU0yuyh0pVBe.pdf",
+  apply: "https://fs20.formsite.com/DAIForms/tuqkvhx3vg/index",
+};
+
 const normalizeTabIdentifier = (value?: string | null) => {
   if (!value) return "";
 
@@ -63,6 +70,12 @@ const isBusinessDevelopmentExpertsTab = (tab: ExtendedProgramTab) =>
   [tab.slug, tab.title_en].some(
     (identifier) =>
       normalizeTabIdentifier(identifier) === BUSINESS_DEVELOPMENT_EXPERTS_TAB_LABEL
+  );
+
+const isHorizonsSpecializedConferenceTab = (tab: ExtendedProgramTab) =>
+  [tab.slug, tab.title_en].some(
+    (identifier) =>
+      normalizeTabIdentifier(identifier) === HORIZONS_SPECIALIZED_CONFERENCE_TAB_LABEL
   );
 
 export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory, programName, programId }: DynamicTabsProps): JSX.Element {
@@ -204,6 +217,33 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
                   </Link>
                 </Button>
               ))}
+            </div>
+          )}
+
+          {isBusinessDevelopmentExpertsProgram && isHorizonsSpecializedConferenceTab(tab) && (
+            <div className={`flex flex-wrap gap-3 ${currentLang === 'ar' ? 'justify-end' : 'justify-start'}`}>
+              <Button
+                asChild
+                size="default"
+                className="bg-gradient-to-r from-[#1C6AAF] to-[#872996] hover:opacity-90
+                          transition-opacity shadow-lg hover:shadow-xl text-sm sm:text-base
+                          px-8 py-2.5"
+              >
+                <Link href={HORIZONS_SPECIALIZED_CONFERENCE_LINKS.overview} target="_blank" rel="noopener noreferrer">
+                  {currentLang === "ar" ? buttonText.overview.ar : "Grant Overview"}
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="default"
+                className="bg-gradient-to-r from-[#1C6AAF] to-[#872996] hover:opacity-90
+                          transition-opacity shadow-lg hover:shadow-xl text-sm sm:text-base
+                          px-8 py-2.5"
+              >
+                <Link href={HORIZONS_SPECIALIZED_CONFERENCE_LINKS.apply} target="_blank" rel="noopener noreferrer">
+                  {currentLang === "ar" ? buttonText.apply.ar : "Apply Here"}
+                </Link>
+              </Button>
             </div>
           )}
 

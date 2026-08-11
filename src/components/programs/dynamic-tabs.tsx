@@ -49,6 +49,13 @@ const HORIZONS_SPECIALIZED_CONFERENCE_LINKS = {
   apply: "https://fs20.formsite.com/DAIForms/tuqkvhx3vg/index",
 };
 
+const HORIZONS_UNIVERSAL_CERTIFICATIONS_TAB_LABEL = "universal certifications support program";
+const HORIZONS_UNIVERSAL_CERTIFICATIONS_LINKS = {
+  overview:
+    "https://smesvpyaajnu4wso.public.blob.vercel-storage.com/Horizons%20Grant%20Overview%20Document%20International%20Certifications-H7HwqHfDElvBkiE5TvfSLBd0qxEhMJ.pdf",
+  apply: "https://fs20.formsite.com/DAIForms/uoyndla0ae/index",
+};
+
 const normalizeTabIdentifier = (value?: string | null) => {
   if (!value) return "";
 
@@ -76,6 +83,12 @@ const isHorizonsSpecializedConferenceTab = (tab: ExtendedProgramTab) =>
   [tab.slug, tab.title_en].some(
     (identifier) =>
       normalizeTabIdentifier(identifier) === HORIZONS_SPECIALIZED_CONFERENCE_TAB_LABEL
+  );
+
+const isHorizonsUniversalCertificationsTab = (tab: ExtendedProgramTab) =>
+  [tab.slug, tab.title_en].some(
+    (identifier) =>
+      normalizeTabIdentifier(identifier) === HORIZONS_UNIVERSAL_CERTIFICATIONS_TAB_LABEL
   );
 
 export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory, programName, programId }: DynamicTabsProps): JSX.Element {
@@ -247,7 +260,32 @@ export default function DynamicTabs({ tabs, lang, faqCategories, faqsByCategory,
             </div>
           )}
 
-
+          {isBusinessDevelopmentExpertsProgram && isHorizonsUniversalCertificationsTab(tab) && (
+            <div className={`flex flex-wrap gap-3 ${currentLang === 'ar' ? 'justify-end' : 'justify-start'}`}>
+              <Button
+                asChild
+                size="default"
+                className="bg-gradient-to-r from-[#1C6AAF] to-[#872996] hover:opacity-90
+                          transition-opacity shadow-lg hover:shadow-xl text-sm sm:text-base
+                          px-8 py-2.5"
+              >
+                <Link href={HORIZONS_UNIVERSAL_CERTIFICATIONS_LINKS.overview} target="_blank" rel="noopener noreferrer">
+                  {currentLang === "ar" ? buttonText.overview.ar : "Grant Overview"}
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="default"
+                className="bg-gradient-to-r from-[#1C6AAF] to-[#872996] hover:opacity-90
+                          transition-opacity shadow-lg hover:shadow-xl text-sm sm:text-base
+                          px-8 py-2.5"
+              >
+                <Link href={HORIZONS_UNIVERSAL_CERTIFICATIONS_LINKS.apply} target="_blank" rel="noopener noreferrer">
+                  {currentLang === "ar" ? buttonText.apply.ar : "Apply Here"}
+                </Link>
+              </Button>
+            </div>
+          )}
 
 
           {(programId === "cm7urr4jk001dt718l3o9exad" ||
